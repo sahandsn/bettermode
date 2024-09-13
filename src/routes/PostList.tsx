@@ -10,12 +10,16 @@ async function loader() {
 
 export default function PostList() {
   const navigate = useNavigate();
-  const { postList } = useLoaderData() as { postList: IPost[] };
+  const { postList } = useLoaderData() as {
+    postList: IPost[];
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
-      slug: { value: string };
+      slug: {
+        value: string;
+      };
     };
     navigate(target.slug.value);
   };

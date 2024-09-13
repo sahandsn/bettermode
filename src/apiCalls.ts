@@ -6,6 +6,9 @@ export function getPostList() {
 }
 
 export function getPost(slug: string) {
-  const post: IPost = { slug: slug, title: slug.toUpperCase() };
+  const post: IPost = {
+    slug: slug,
+    title: slug.toUpperCase(),
+  };
   return Promise.resolve(post);
 }

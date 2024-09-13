@@ -1,5 +1,5 @@
 function Main() {
-  return <p>main page</p>;
+  return <p className="text-xs">main page</p>;
 }
 
 export default Main;
