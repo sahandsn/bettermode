@@ -15,7 +15,7 @@ async function loader({ params }: { params: Params<"postSlug"> }) {
 export default function Post() {
   const { post } = useLoaderData() as { post: IPost };
   return (
-                      <section>
+    <section>
       <p>a post</p>
       {JSON.stringify(post)}
     </section>
