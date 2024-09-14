@@ -1,5 +1,5 @@
 function Home() {
-  return <p className="text-xs">Home page</p>;
+  return <p>Home page</p>;
 }
 
 export default Home;
