@@ -1,24 +1,30 @@
 import { getPost } from "../apiCalls";
-import { useLoaderData } from "react-router-dom";
-import { IPost } from "../types";
+import { Await, useLoaderData } from "react-router-dom";
+// import { IPost } from "../types";
 import type { Params } from "react-router-dom";
+import { Suspense } from "react";
 
 async function loader({ params }: { params: Params<"postSlug"> }) {
   if (params.postSlug) {
-    const post = await getPost(params.postSlug);
+    const post = getPost(params.postSlug);
+    console.log("post in loader", post);
     return { post };
   } else {
-    return undefined;
+    throw new Error("Post slug is required");
   }
 }
 
 export default function Post() {
-  const { post } = useLoaderData() as { post: IPost };
+  const data = useLoaderData();
+  console.log("data", data);
   return (
-    <section>
-      <p>a post</p>
-      {JSON.stringify(post)}
-    </section>
+    <Suspense fallback={<p>Loading post details...</p>}>
+      <Await resolve={data} errorElement={<p>could not load post details!</p>}>
+        <section>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
+        </section>
+      </Await>
+    </Suspense>
   );
 }
 
