@@ -7,7 +7,7 @@ import ErrorPage from "./error-page.tsx";
 import Post from "./routes/Post.tsx";
 import PostList from "./routes/PostList.tsx";
 import Signin from "./routes/Signin.tsx";
-import Main from "./routes/Main.tsx";
+import Home from "./routes/Home.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Main />,
+        element: <Home />,
       },
       {
         path: "post-list/",
