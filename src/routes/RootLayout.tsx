@@ -1,4 +1,5 @@
 import { Outlet, NavLink } from "react-router-dom";
+import { Suspense } from "react";
 
 interface INavItem {
   href: string;
@@ -24,7 +25,7 @@ function App() {
   ];
 
   return (
-    <>
+    <Suspense fallback={<p>whole page loading...</p>}>
       <header className="flex items-center justify-evenly">
         <p>header</p>
         <nav>
@@ -49,7 +50,7 @@ function App() {
         <Outlet />
       </main>
       <footer className="text-center">footer</footer>
-    </>
+    </Suspense>
   );
 }
 

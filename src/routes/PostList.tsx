@@ -1,43 +1,39 @@
-import { getPostList } from "../apiCalls";
-import { useLoaderData, Link, useNavigate } from "react-router-dom";
-import { IPost } from "../types";
-import { FormEvent } from "react";
+import { useQuery, gql } from "@apollo/client";
+import { Link } from "react-router-dom";
 
-async function loader() {
-  const postList = await getPostList();
-  return { postList };
+interface ILocation {
+  id: string;
+  name: string;
+  description: string;
+  photo: string;
 }
+
+const GET_LOCATIONS = gql`
+  query GetLocations {
+    locations {
+      id
+      name
+      description
+      photo
+    }
+  }
+`;
 
 export default function PostList() {
-  const navigate = useNavigate();
-  const { postList } = useLoaderData() as {
-    postList: IPost[];
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const target = e.target as typeof e.target & {
-      slug: {
-        value: string;
-      };
-    };
-    navigate(target.slug.value);
-  };
-
-  return (
-    <section>
-      <p>post list </p>
-      <form onSubmit={handleSubmit}>
-        <input name="slug" className="border border-black" />
-        <button type="submit">Navigate</button>
-      </form>
-      {postList.map((item) => (
-        <Link to={item.slug} key={item.slug}>
-          {item.title}
-        </Link>
-      ))}
-    </section>
+  const { loading, error, data } = useQuery<{ locations: ILocation[] }>(
+    GET_LOCATIONS
   );
-}
+  if (loading) return <p>Loading...</p>;
+  if (error) throw Error(error.message);
 
-PostList.loader = loader;
+  return data?.locations.map(({ id, name, description, photo }) => (
+    <section key={id}>
+      <Link to={id}>{name}</Link>
+      <img width="400" height="250" alt="location-reference" src={`${photo}`} />
+      <br />
+      <b>About this location:</b>
+      <p>{description}</p>
+      <br />
+    </section>
+  ));
+}
