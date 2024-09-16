@@ -35,7 +35,6 @@ const router = createBrowserRouter([
       {
         path: "post-list/",
         element: <PostList />,
-        loader: PostList.loader,
       },
       {
         path: "post-list/:postSlug/",
